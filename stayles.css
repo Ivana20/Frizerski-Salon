@@ -1,0 +1,163 @@
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.line {
+    height: 1px;
+    width: 100%;
+    border-bottom: 1px solid brown;
+}
+   
+.center {
+    text-align: center;
+}
+
+hr {
+    color: red;
+}
+
+.centar {
+      margin-right: 50px;
+      margin-left: 50px;
+      color: white;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 3px;
+}
+
+.color {
+    background-color: black;
+    color: white;
+}
+
+.gridTwo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 3px;
+}
+
+.gridThree {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 60%;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.subtitle {
+    margin-left: 40px;
+    margin-right: 40px;
+    color: white;
+}
+
+.hr {
+    border: 2px solid brown;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+  
+.container {
+    padding: 20px;
+}
+  
+.col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+}
+  
+.col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+}
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.image{
+      z-index: -3;
+}
+ 
+.change {
+    margin-right: 40px;
+    margin-left: 40px;
+    text-align: center;
+}
+
+.carousel-inner img {
+    width: 100%; /* Set width to 100% */
+    margin: 0px;
+}
+.video{
+    z-index: -3;
+    position: fixed;
+}
+
+.boja {
+    background-color: darkgray
+}
+
+@media (max-width: 600px) {
+    .carousel-caption {
+      display: none; /* Hide the carousel text when the screen is less than 600 pixels wide */
+    }
+}
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    .col-25, .col-75, input[type=submit] {
+      width: 100%;
+      margin-top: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    iframe {
+        width: 100% !important;
+        height: auto !important;
+      }
+      .gridTwo {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 3px;
+    }
+}
+  
+
+.navbar {
+    margin-bottom: 0;
+    background-color: #2d2d30;
+    border: 0;
+    font-size: 11px !important;
+    letter-spacing: 4px;
+    opacity: 0.9;
+    display: fixed;
+  }
+  .navbar li a, .navbar .navbar-brand { 
+    color: black !important;
+  }
+
+  .navbar-default .navbar-toggle {
+    border-color: transparent;
+  }
+
+.fixed {
+    display: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 20;
+}

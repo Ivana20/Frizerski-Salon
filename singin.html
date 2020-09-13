@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="stayles.css">
+    <link rel="stylesheet" href="login.js">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/252f0fbb22.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="boja">
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Kris<i class="fas fa-cut"></i></a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a class="active" href="index.html">Početna</a></li>
+                    <li><a href="istorija.html">O nama</a></li>
+                    <li><a href="cenovnik.html">Cenovnik</a></li>
+                    <li><a href="galerija.html">Galerija</a></li>
+                    <li><a href="Kontakt.html">Kontakt</a></li>
+                    <li><a href="login.html"><i class="fas fa-user"></i> Prijavi se</a></li>
+                    <li><a href="singin.html"><i class="fas fa-sign-in-alt"></i> Registruj se</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" class="margin">
+        <h2>Registruj se</h2>
+        <form id="form">
+
+            <div class="form-group" id="registationForm">
+                <label for="ime">Ime:</label>
+                <input type="ime" class="form-control" id="ime" placeholder="Unesite ime" name="ime" required>
+            </div>
+
+            <div class="form-group" id="registationForm">
+                <label for="prezime">Prezime:</label>
+                <input type="prezime" class="form-control" id="prezime" placeholder="Unesite prezime" name="prezime"
+                    required>
+            </div>
+
+            <div class="form-group" id="registationForm">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" placeholder="Unesite email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Sifra:</label>
+                <input type="password" class="form-control" id="password" placeholder="Unesite sifru" name="password"
+                    required>
+            </div>
+
+            <button type="button" class="btn btn-primary" onClick="btnSubmit()">Potvrdi</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge">
+        <i class="fa fa-facebook-official w3-hover-opacity"></i>
+        <i class="fa fa-instagram w3-hover-opacity"></i>
+        <i class="fa fa-snapchat w3-hover-opacity"></i>
+        <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+        <i class="fa fa-twitter w3-hover-opacity"></i>
+        <i class="fa fa-linkedin w3-hover-opacity"></i>
+        <p class="w3-medium">Powered by Copyright © 2020 Ivana Cuparic. All Rights Reserved</p>
+    </footer>
+
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-analytics.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+            apiKey: "AIzaSyBPzXqgwgOEunGsvMVJQ2dXIh_I2HR-Ums",
+            authDomain: "diplomski-43dcd.firebaseapp.com",
+            databaseURL: "https://diplomski-43dcd.firebaseio.com",
+            projectId: "diplomski-43dcd",
+            storageBucket: "diplomski-43dcd.appspot.com",
+            messagingSenderId: "1060304851313",
+            appId: "1:1060304851313:web:d2d01cfffaf1133e29e6d0",
+            measurementId: "G-NTSV4M6GTQ"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+
+        function btnSubmit() {
+            var name = document.querySelector('#ime').value;
+            var lastName = document.querySelector('#prezime').value;
+            var userName = document.querySelector('#email').value;
+            var password = document.querySelector('#password').value;
+            console.log(userName + " and " + password)
+            console.log(name + " and " + lastName)
+            
+            async function postData(url = '', data = {}) {
+                // Default options are marked with *
+                const response = await fetch(url, {
+                    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                    body: data // body data type must match "Content-Type" header
+                });
+                return JSON.stringify(data); // parses JSON response into native JavaScript objects
+            }
+
+            postData(firebaseConfig.databaseURL, { name: name, lastName: lastName })
+                .then(data => {
+                    console.log(JSON.parse(data)); // JSON data parsed by `data.json()` call
+                });
+        }
+
+    </script>
+
+    <script src="./login.js"></script>
+</body>
+
+</html>
