@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <title>Registracija</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="stayles.css">
     <link rel="stylesheet" href="login.js">
@@ -64,7 +65,9 @@
                     required>
             </div>
 
-            <button type="button" class="btn btn-primary" onClick="btnSubmit()">Potvrdi</button>
+            
+                <button type="button" class="btn btn-primary" onClick="btnSubmit()">Potvrdi</button>
+           
         </form>
     </div>
 
@@ -82,6 +85,8 @@
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-database.js"></script>
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
@@ -104,27 +109,47 @@
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
 
-        function btnSubmit() {
-            var name = document.querySelector('#ime').value;
+        async function btnSubmit() {
+            var firstName = document.querySelector('#ime').value;
             var lastName = document.querySelector('#prezime').value;
-            var userName = document.querySelector('#email').value;
+            var email = document.querySelector('#email').value;
             var password = document.querySelector('#password').value;
-            console.log(userName + " and " + password)
-            console.log(name + " and " + lastName)
-            
-            async function postData(url = '', data = {}) {
-                // Default options are marked with *
-                const response = await fetch(url, {
-                    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                    body: data // body data type must match "Content-Type" header
-                });
-                return JSON.stringify(data); // parses JSON response into native JavaScript objects
+            console.log(email + " and " + password)
+            console.log(firstName + " and " + lastName)
+
+            const firebaseAuth = firebase.auth()
+            const currentUser = firebaseAuth.currentUser
+            if (currentUser) {
+                console.log(currentUser)
+                await firebaseAuth.signOut()
+                console.log('Sign out successful')
             }
 
-            postData(firebaseConfig.databaseURL, { name: name, lastName: lastName })
-                .then(data => {
-                    console.log(JSON.parse(data)); // JSON data parsed by `data.json()` call
-                });
+            try {
+                const authData = await firebaseAuth.createUserWithEmailAndPassword(email, password)
+                const uuid = authData.user.uid
+                console.log('uuid: ', uuid)
+
+                const usersDatabase = firebase.database().ref(`users/${uuid}`).set({
+                    id: uuid, email, firstName, lastName
+                })
+            } catch (err) {
+                console.log('Error: ', err.message)
+            }
+
+            // async function postData(url = '', data = {}) {
+            //     // Default options are marked with *
+            //     const response = await fetch(url, {
+            //         method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            //         body: data // body data type must match "Content-Type" header
+            //     });
+            //     return JSON.stringify(data); // parses JSON response into native JavaScript objects
+            // }
+
+            // postData(firebaseConfig.databaseURL, { name: name, lastName: lastName })
+            //     .then(data => {
+            //         console.log(JSON.parse(data)); // JSON data parsed by `data.json()` call
+            //     });
         }
 
     </script>

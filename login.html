@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <title>Prijavljivanje</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="stayles.css">
     <link rel="stylesheet" href="login.js">
@@ -40,7 +41,7 @@
 
     <div class="container" class="margin">
         <h2>Prijavi se </h2>
-        <form id="form">
+        <form id="form" action="/index.html">
             <div class="form-group" id="registationForm">
                 <label for="email">Email:</label>
                 <input type="email" class="form-control" id="email" placeholder="Unesite email" name="email" required>
@@ -53,8 +54,8 @@
             <div class="checkbox">
                 <label><input type="checkbox" name="remember"> <i>Zapamti</i></label>
             </div>
-            
-        <button type="button" class="btn btn-primary"  onClick="btnSubmit()">Potvrdi</button>
+
+            <button type="button" class="btn btn-primary" onClick="btnSubmit()">Potvrdi</button>
         </form>
     </div>
 
@@ -69,13 +70,43 @@
         <p class="w3-medium">Powered by Copyright © 2020 Ivana Cuparic. All Rights Reserved</p>
     </footer>
 
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+
     <script>
 
-    function btnSubmit() {
-    var userName = document.querySelector('#email').value;
-    var password = document.querySelector('#password').value;
-    console.log(userName + " and " + password)
-  }
+        var firebaseConfig = {
+            apiKey: "AIzaSyBPzXqgwgOEunGsvMVJQ2dXIh_I2HR-Ums",
+            authDomain: "diplomski-43dcd.firebaseapp.com",
+            databaseURL: "https://diplomski-43dcd.firebaseio.com",
+            projectId: "diplomski-43dcd",
+            storageBucket: "diplomski-43dcd.appspot.com",
+            messagingSenderId: "1060304851313",
+            appId: "1:1060304851313:web:d2d01cfffaf1133e29e6d0",
+            measurementId: "G-NTSV4M6GTQ"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        async function btnSubmit() {
+            var email = document.querySelector('#email').value;
+            var password = document.querySelector('#password').value;
+            try {
+                const firebaseAuth = firebase.auth()
+                if (firebaseAuth.currentUser) {
+                    await firebaseAuth.signOut()
+                    console.log('Signout successful.')
+                }
+                const authData = await firebaseAuth.signInWithEmailAndPassword(email, password)
+                console.log('AuthData: ', authData)
+
+                
+            } catch (err) {
+                console.log('Error: ', err.message)
+            }
+
+            
+        }
     </script>
 
     <script src="./login.js"></script>
